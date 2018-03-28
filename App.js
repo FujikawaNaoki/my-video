@@ -131,10 +131,12 @@ export default class App extends React.Component {
     };
     render() {
         let {width,height} = Dimensions.get('window');
-        console.log(width);
-        console.log(height);
+        console.log("width",width);
+        console.log("height",height);
 
-        height = this.state.isFull ? height:height/2;
+        width = this.state.isFull ? width : (width / 100) * 80;
+        //height = this.state.isFull ? height:height/2;
+        height = (width /16)  * 9;
 
         return (
             <View style={styles.container}>
