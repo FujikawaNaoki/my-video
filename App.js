@@ -83,7 +83,7 @@ export default class App extends React.Component {
         isFull:false,
         inputValue1:'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
         inputValue2:'http://techslides.com/demos/sample-videos/small.mp4',
-        inputValue3:''
+        inputValue3:'http://192.168.1.2/streaming/mystream.m3u8'
     };
 
     _handlePlayAndPause = () => {
@@ -104,8 +104,14 @@ export default class App extends React.Component {
         }));
     };
 
-    _handleTextChange = inputValue => {
-        this.setState({ inputValue });
+    _handleTextChange1 = inputValue => {
+        this.setState({ inputValue1 : inputValue });
+    };
+    _handleTextChange2 = inputValue => {
+        this.setState({ inputValue2 : inputValue });
+    };
+    _handleTextChange3 = inputValue => {
+        this.setState({ inputValue3 : inputValue });
     };
 
     _handleVideoSetting1 = () => {
@@ -180,7 +186,7 @@ export default class App extends React.Component {
                 <View style={styles.controlUrlBox1}>
                     <TextInput
                         value={this.state.inputValue1}
-                        onChangeText={this._handleTextChange}
+                        onChangeText={this._handleTextChange1}
                         style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
                     />
                     <Ionicons
@@ -194,7 +200,7 @@ export default class App extends React.Component {
                 <View style={styles.controlUrlBox2}>
                     <TextInput
                         value={this.state.inputValue2}
-                        onChangeText={this._handleTextChange}
+                        onChangeText={this._handleTextChange2}
                         style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
                     />
                     <Ionicons
@@ -208,7 +214,7 @@ export default class App extends React.Component {
                 <View style={styles.controlUrlBox3}>
                     <TextInput
                         value={this.state.inputValue3}
-                        onChangeText={this._handleTextChange}
+                        onChangeText={this._handleTextChange3}
                         style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
                     />
                     <Ionicons
