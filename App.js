@@ -9,6 +9,7 @@ import {
 import {
     Video
 } from 'expo';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
     MaterialIcons,
@@ -35,15 +36,15 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     controlVideo:{
-        zIndex:10
+        zIndex:1
     },
     controlUrlBox1: {
         zIndex:1,
         position: 'absolute',
-        bottom: 100,
+        top: 35,
         left: 0,
         right: 0,
-        height: 45,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: "rgba(0, 0, 0, 0)",
@@ -51,10 +52,10 @@ const styles = StyleSheet.create({
     controlUrlBox2: {
         zIndex:1,
         position: 'absolute',
-        bottom: 55,
+        top: 75,
         left: 0,
         right: 0,
-        height: 45,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: "rgba(0, 0, 0, 0)",
@@ -62,10 +63,10 @@ const styles = StyleSheet.create({
     controlUrlBox3: {
         zIndex:1,
         position: 'absolute',
-        bottom: 10,
+        top: 115,
         left: 0,
         right: 0,
-        height: 45,
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: "rgba(0, 0, 0, 0)",
@@ -145,88 +146,87 @@ export default class App extends React.Component {
         height = (width /16)  * 9;
 
         return (
-            <View style={styles.container}>
-                <View style={styles.controlVideo}>
-                    <Text style={{textAlign: 'center'}}> Play URL: {this.state.uri} </Text>
-                    {/*https://docs.expo.io/versions/v25.0.0/sdk/video.html#content*/}
-                    <Video
-                        source={{uri: this.state.uri}}
-                        shouldPlay={this.state.shouldPlay}
-                        resizeMode="cover"
-                        rate={1.0}
-                        volume={this.state.volume}
-                        style={{width, height}}
-                        isMuted={this.state.mute}
-                    />
-                    <View style={styles.controlBar}>
-                        {/*https://expo.github.io/vector-icons/*/}
-                        <Ionicons
-                            name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
-                            size={40}
-                            color="white"
-                            onPress={this._handleVolume}
-                            style={{padding:5}}
+                <View style={styles.container}>
+                    <View style={styles.controlUrlBox1}>
+                        <TextInput
+                            value={this.state.inputValue1}
+                            onChangeText={this._handleTextChange1}
+                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
                         />
                         <Ionicons
-                            name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
+                            name={this.state.selectIndex === 1 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
                             size={40}
-                            color="white"
-                            onPress={this._handlePlayAndPause}
+                            color="black"
+                            onPress={this._handleVideoSetting1}
                             style={{padding:5}}
-                        />
-                        <MaterialIcons
-                            name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
-                            size={40}
-                            color="white"
-                            onPress={this._handleViewSize}
-                            style={{marginLeft: 'auto'}}
                         />
                     </View>
+                    <View style={styles.controlUrlBox2}>
+                        <TextInput
+                            value={this.state.inputValue2}
+                            onChangeText={this._handleTextChange2}
+                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
+                        />
+                        <Ionicons
+                            name={this.state.selectIndex === 2 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
+                            size={40}
+                            color="black"
+                            onPress={this._handleVideoSetting2}
+                            style={{padding:5}}
+                        />
+                    </View>
+                    <View style={styles.controlUrlBox3}>
+                        <TextInput
+                            value={this.state.inputValue3}
+                            onChangeText={this._handleTextChange3}
+                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
+                        />
+                        <Ionicons
+                            name={this.state.selectIndex === 3 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
+                            size={40}
+                            color="black"
+                            onPress={this._handleVideoSetting3}
+                            style={{padding:5}}
+                        />
+                    </View>
+                    <View style={styles.controlVideo}>
+                        <Text style={{textAlign: 'center'}}> Play URL: {this.state.uri} </Text>
+                        {/*https://docs.expo.io/versions/v25.0.0/sdk/video.html#content*/}
+                        <Video
+                            source={{uri: this.state.uri}}
+                            shouldPlay={this.state.shouldPlay}
+                            resizeMode="cover"
+                            rate={1.0}
+                            volume={this.state.volume}
+                            style={{width, height}}
+                            isMuted={this.state.mute}
+                        />
+                        <View style={styles.controlBar}>
+                            {/*https://expo.github.io/vector-icons/*/}
+                            <Ionicons
+                                name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
+                                size={40}
+                                color="white"
+                                onPress={this._handleVolume}
+                                style={{padding:5}}
+                            />
+                            <Ionicons
+                                name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
+                                size={40}
+                                color="white"
+                                onPress={this._handlePlayAndPause}
+                                style={{padding:5}}
+                            />
+                            <MaterialIcons
+                                name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
+                                size={40}
+                                color="white"
+                                onPress={this._handleViewSize}
+                                style={{marginLeft: 'auto'}}
+                            />
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.controlUrlBox1}>
-                    <TextInput
-                        value={this.state.inputValue1}
-                        onChangeText={this._handleTextChange1}
-                        style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                    />
-                    <Ionicons
-                        name={this.state.selectIndex === 1 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                        size={40}
-                        color="black"
-                        onPress={this._handleVideoSetting1}
-                        style={{padding:5}}
-                    />
-                </View>
-                <View style={styles.controlUrlBox2}>
-                    <TextInput
-                        value={this.state.inputValue2}
-                        onChangeText={this._handleTextChange2}
-                        style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                    />
-                    <Ionicons
-                        name={this.state.selectIndex === 2 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                        size={40}
-                        color="black"
-                        onPress={this._handleVideoSetting2}
-                        style={{padding:5}}
-                    />
-                </View>
-                <View style={styles.controlUrlBox3}>
-                    <TextInput
-                        value={this.state.inputValue3}
-                        onChangeText={this._handleTextChange3}
-                        style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                    />
-                    <Ionicons
-                        name={this.state.selectIndex === 3 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                        size={40}
-                        color="black"
-                        onPress={this._handleVideoSetting3}
-                        style={{padding:5}}
-                    />
-                </View>
-            </View>
-
         );
     }
 }
