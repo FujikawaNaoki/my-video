@@ -9,83 +9,35 @@ import {
 import {
     Video
 } from 'expo';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
     MaterialIcons,
-    Octicons,
     Ionicons
 } from '@expo/vector-icons';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    controlBar: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 45,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    controlVideo:{
-        zIndex:1
-    },
-    controlUrlBox1: {
-        zIndex:1,
-        position: 'absolute',
-        top: 35,
-        left: 0,
-        right: 0,
-        height: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: "rgba(0, 0, 0, 0)",
-    },
-    controlUrlBox2: {
-        zIndex:1,
-        position: 'absolute',
-        top: 75,
-        left: 0,
-        right: 0,
-        height: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: "rgba(0, 0, 0, 0)",
-    },
-    controlUrlBox3: {
-        zIndex:1,
-        position: 'absolute',
-        top: 115,
-        left: 0,
-        right: 0,
-        height: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: "rgba(0, 0, 0, 0)",
-    }
-});
+import {
+    FormLabel,
+    FormInput
+} from 'react-native-elements'
 
 export default class App extends React.Component {
 
-    state = {
-        mute: false,
-        shouldPlay: false,
-        volume: 1.0,
-        uri: "",
-        selectIndex:0,
-        isFull:false,
-        inputValue1:'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
-        inputValue2:'http://techslides.com/demos/sample-videos/small.mp4',
-        inputValue3:'http://192.168.1.2/streaming/mystream.m3u8'
-    };
+    constructor(props, context, updater) {
+        super(props, context, updater);
+
+        this.state = {
+            mute: false,
+            shouldPlay: false,
+            volume: 1.0,
+            uri: "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8",
+            selectIndex: 0,
+            isFull: false,
+            inputValue1: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
+            inputValue2: 'http://techslides.com/demos/sample-videos/small.mp4',
+            inputValue3: 'http://192.168.1.2/streaming/mystream.m3u8'
+        };
+
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+    }
 
     _handlePlayAndPause = () => {
         this.setState((prevState) => ({
@@ -105,130 +57,64 @@ export default class App extends React.Component {
         }));
     };
 
-    _handleTextChange1 = inputValue => {
-        this.setState({ inputValue1 : inputValue });
-    };
-    _handleTextChange2 = inputValue => {
-        this.setState({ inputValue2 : inputValue });
-    };
-    _handleTextChange3 = inputValue => {
-        this.setState({ inputValue3 : inputValue });
-    };
-
-    _handleVideoSetting1 = () => {
-        this.setState({
-            uri:this.state.inputValue1,
-            selectIndex:1,
-            shouldPlay: false
-        });
-    };
-    _handleVideoSetting2 = () => {
-        this.setState({
-            uri:this.state.inputValue2,
-            selectIndex:2,
-            shouldPlay: false
-        });
-    };
-    _handleVideoSetting3 = () => {
-        this.setState({
-            uri:this.state.inputValue3,
-            selectIndex:3,
-            shouldPlay: false
-        });
-    };
     render() {
-        let {width,height} = Dimensions.get('window');
-        console.log("width",width);
-        console.log("height",height);
+        let {width, height} = Dimensions.get('window');
 
-        width = this.state.isFull ? width : (width / 100) * 80;
+        console.log("window.width", width);
+        console.log("window.height", height);
+
+        //width=1520,height=960
+
+        width = this.state.isFull ? width * 0.95 : width * 0.75;
         //height = this.state.isFull ? height:height/2;
-        height = (width /16)  * 9;
+        height = height * (width / 1520);
+
+        console.log("width", width);
+        console.log("height", height);
 
         return (
-                <View style={styles.container}>
-                    <View style={styles.controlUrlBox1}>
-                        <TextInput
-                            value={this.state.inputValue1}
-                            onChangeText={this._handleTextChange1}
-                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                        />
-                        <Ionicons
-                            name={this.state.selectIndex === 1 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                            size={40}
-                            color="black"
-                            onPress={this._handleVideoSetting1}
-                            style={{padding:5}}
-                        />
-                    </View>
-                    <View style={styles.controlUrlBox2}>
-                        <TextInput
-                            value={this.state.inputValue2}
-                            onChangeText={this._handleTextChange2}
-                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                        />
-                        <Ionicons
-                            name={this.state.selectIndex === 2 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                            size={40}
-                            color="black"
-                            onPress={this._handleVideoSetting2}
-                            style={{padding:5}}
-                        />
-                    </View>
-                    <View style={styles.controlUrlBox3}>
-                        <TextInput
-                            value={this.state.inputValue3}
-                            onChangeText={this._handleTextChange3}
-                            style={{ width: '80%', height: 44, padding: 8, borderWidth: 1, borderColor: '#ccc' }}
-                        />
-                        <Ionicons
-                            name={this.state.selectIndex === 3 ? "ios-radio-button-on-outline": "ios-radio-button-off-outline"}
-                            size={40}
-                            color="black"
-                            onPress={this._handleVideoSetting3}
-                            style={{padding:5}}
-                        />
-                    </View>
-                    <View style={styles.controlVideo}>
-                        <Text style={{textAlign: 'center'}}> Play URL: {this.state.uri} </Text>
-                        {/*https://docs.expo.io/versions/v25.0.0/sdk/video.html#content*/}
-                        <Video
-                            source={{uri: this.state.uri}}
-                            shouldPlay={this.state.shouldPlay}
-                            resizeMode="cover"
-                            rate={1.0}
-                            volume={this.state.volume}
-                            style={{width, height}}
-                            isMuted={this.state.mute}
-                        />
-                        <View style={styles.controlBar}>
-                            {/*https://expo.github.io/vector-icons/*/}
-                            <Ionicons
-                                name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
-                                size={40}
-                                color="white"
-                                onPress={this._handleVolume}
-                                style={{padding:5}}
-                            />
-                            <Ionicons
-                                name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
-                                size={40}
-                                color="white"
-                                onPress={this._handlePlayAndPause}
-                                style={{padding:5}}
-                            />
-                            <MaterialIcons
-                                name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
-                                size={40}
-                                color="white"
-                                onPress={this._handleViewSize}
-                                style={{marginLeft: 'auto'}}
-                            />
+                <View style={{flex: 1, }}>
+                    <View style={{flex: 2,flexDirection: 'row', backgroundColor: 'gray',paddingTop:25 ,paddingBottom:5}} >
+                        <View>
+                            <FormLabel>Name</FormLabel>
+                            <FormInput />
                         </View>
+                    </View>
+                    <View style={{flex: 17, backgroundColor: 'black',alignItems:'center',justifyContent: 'center'}} >
+                         <Video
+                             source={{uri: this.state.uri}}
+                             shouldPlay={this.state.shouldPlay}
+                             resizeMode="cover"
+                             rate={1.0}
+                             volume={this.state.volume}
+                             style={{width, height}}
+                             isMuted={this.state.mute}
+                         />
+                    </View>
+                    <View style={{flex: 1, backgroundColor: 'gray',flexDirection: 'row'}} >
+                        <Ionicons
+                             name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
+                             size={40}
+                             color="white"
+                             onPress={this._handleVolume}
+                             style={{paddingLeft: 10}}
+                         />
+                         <Ionicons
+                             name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
+                             size={40}
+                             color="white"
+                             onPress={this._handlePlayAndPause}
+                             style={{paddingLeft: 10}}
+                         />
+                         <MaterialIcons
+                             name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
+                             size={40}
+                             color="white"
+                             onPress={this._handleViewSize}
+                             style={{marginLeft: 'auto'}}
+                         />
                     </View>
                 </View>
         );
     }
 }
-//http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
-//https://bitmovin-a.akamaihd.net/content/playhouse-vr/m3u8s/105560.m3u8
