@@ -26,6 +26,7 @@ export default class App extends React.Component {
             shouldPlay: false,
             volume: 1.0,
             uri: "http://192.168.1.2/streaming/mystream.m3u8",
+            //uri: "http://localhost:8080/streaming/mystream.m3u8",
             //uri: "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8",
             //uri: 'http://techslides.com/demos/sample-videos/small.mp4',
             isFull: false,
@@ -64,7 +65,7 @@ export default class App extends React.Component {
 
         //width=1520,height=960
 
-        width = this.state.isFull ? width * 0.95 : width * 0.75;
+        width = this.state.isFull ? width * 0.99 : width * 0.8;
         //height = this.state.isFull ? height:height/2;
         height = height * (width / 1520);
 
@@ -110,11 +111,11 @@ export default class App extends React.Component {
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>性別:{this.state.sex}</FormLabel>
 
                 </View>
-                <View style={{flex: 17, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{flex: 17, backgroundColor: '#F3F3F3', alignItems: 'center', justifyContent: 'center'}}>
                     <Video
                         source={{uri: this.state.uri}}
                         shouldPlay={this.state.shouldPlay}
-                        resizeMode="contain"
+                        resizeMode={Expo.Video.RESIZE_MODE_CONTAIN}
                         rate={1.0}
                         volume={this.state.volume}
                         style={{width, height}}
