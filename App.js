@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-    TextInput,
     View,
-    Dimensions
+    Dimensions,
+    Picker
 } from 'react-native';
 import {
     Video
@@ -27,6 +27,7 @@ export default class App extends React.Component {
             shouldPlay: false,
             volume: 1.0,
             uri: "http://192.168.1.2/streaming/mystream.m3u8",
+            //uri: "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8",
             isFull: false,
             // inputValue1: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
             // inputValue2: 'http://techslides.com/demos/sample-videos/small.mp4',
