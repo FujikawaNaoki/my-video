@@ -111,7 +111,8 @@ export default class App extends React.Component {
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>性別:{this.state.sex}</FormLabel>
 
                 </View>
-                <View style={{flex: 17, backgroundColor: '#F3F3F3', alignItems: 'center', justifyContent: 'center'}}>
+                {/*<View style={{flex: 17, backgroundColor: '#F3F3F3', alignItems: 'center', justifyContent: 'center'}}>*/}
+                <View style={{flex: 17, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
                     <Video
                         source={{uri: this.state.uri}}
                         shouldPlay={this.state.shouldPlay}
