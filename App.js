@@ -89,7 +89,7 @@ export default class App extends React.Component {
                             if (this.state.id == null) {
                                 this.setState({
                                     id: 1234567890,
-                                    name: "藤川　直樹",
+                                    name: "東京　太郎",
                                     sex: "男",
                                     age: 40
                                 })
@@ -114,7 +114,7 @@ export default class App extends React.Component {
                     <Video
                         source={{uri: this.state.uri}}
                         shouldPlay={this.state.shouldPlay}
-                        resizeMode="cover"
+                        resizeMode="contain"
                         rate={1.0}
                         volume={this.state.volume}
                         style={{width, height}}
