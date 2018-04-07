@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-    StyleSheet,
-    Text,
     TextInput,
     View,
     Dimensions
@@ -16,7 +14,7 @@ import {
 } from '@expo/vector-icons';
 import {
     FormLabel,
-    FormInput
+    Button
 } from 'react-native-elements'
 
 export default class App extends React.Component {
@@ -28,12 +26,15 @@ export default class App extends React.Component {
             mute: false,
             shouldPlay: false,
             volume: 1.0,
-            uri: "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8",
-            selectIndex: 0,
+            uri: "http://192.168.1.2/streaming/mystream.m3u8",
             isFull: false,
-            inputValue1: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
-            inputValue2: 'http://techslides.com/demos/sample-videos/small.mp4',
-            inputValue3: 'http://192.168.1.2/streaming/mystream.m3u8'
+            // inputValue1: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
+            // inputValue2: 'http://techslides.com/demos/sample-videos/small.mp4',
+            // inputValue3: 'http://192.168.1.2/streaming/mystream.m3u8',
+            id: null,
+            name: null,
+            sex: null,
+            age: null
         };
 
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
@@ -73,48 +74,73 @@ export default class App extends React.Component {
         console.log("height", height);
 
         return (
-                <View style={{flex: 1, }}>
-                    <View style={{flex: 2,flexDirection: 'row', backgroundColor: 'gray',paddingTop:25 ,paddingBottom:5}} >
-                        <View>
-                            <FormLabel>Name</FormLabel>
-                            <FormInput />
-                        </View>
-                    </View>
-                    <View style={{flex: 17, backgroundColor: 'black',alignItems:'center',justifyContent: 'center'}} >
-                         <Video
-                             source={{uri: this.state.uri}}
-                             shouldPlay={this.state.shouldPlay}
-                             resizeMode="cover"
-                             rate={1.0}
-                             volume={this.state.volume}
-                             style={{width, height}}
-                             isMuted={this.state.mute}
-                         />
-                    </View>
-                    <View style={{flex: 1, backgroundColor: 'gray',flexDirection: 'row'}} >
-                        <Ionicons
-                             name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
-                             size={40}
-                             color="white"
-                             onPress={this._handleVolume}
-                             style={{paddingLeft: 10}}
-                         />
-                         <Ionicons
-                             name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
-                             size={40}
-                             color="white"
-                             onPress={this._handlePlayAndPause}
-                             style={{paddingLeft: 10}}
-                         />
-                         <MaterialIcons
-                             name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
-                             size={40}
-                             color="white"
-                             onPress={this._handleViewSize}
-                             style={{marginLeft: 'auto'}}
-                         />
-                    </View>
+            <View style={{flex: 1}}>
+                <View
+                    style={{flex: 1.5, flexDirection: 'row', backgroundColor: 'gray', paddingTop: 25, paddingBottom: 5}}>
+                    <Button
+                        icon={{name: 'ios-contact-outline', type: 'ionicon'}}
+                        title='患者情報取得'
+                        borderRadius={15}
+                        onPress={()=>{
+                            if (this.state.id == null) {
+                                this.setState({
+                                    id: 1234567890,
+                                    name: "藤川　直樹",
+                                    sex: "男",
+                                    age: 40
+                                })
+                            } else {
+                                this.setState({
+                                    id: null,
+                                    name: null,
+                                    sex: null,
+                                    age: null
+                                })
+                            }
+                        }}
+                    />
+
+                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:180}}>ID:{this.state.id}</FormLabel>
+                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:180}}>氏名:{this.state.name}</FormLabel>
+                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:100}}>年齢:{this.state.age}</FormLabel>
+                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:100}}>性別:{this.state.sex}</FormLabel>
+
                 </View>
+                <View style={{flex: 17, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
+                    <Video
+                        source={{uri: this.state.uri}}
+                        shouldPlay={this.state.shouldPlay}
+                        resizeMode="cover"
+                        rate={1.0}
+                        volume={this.state.volume}
+                        style={{width, height}}
+                        isMuted={this.state.mute}
+                    />
+                </View>
+                <View style={{flex: 1, backgroundColor: 'gray', flexDirection: 'row'}}>
+                    <Ionicons
+                        name={this.state.mute ? "ios-volume-off" : "ios-volume-up-outline"}
+                        size={40}
+                        color="white"
+                        onPress={this._handleVolume}
+                        style={{paddingLeft: 25}}
+                    />
+                    <Ionicons
+                        name={this.state.shouldPlay ? "ios-pause-outline" : "ios-play-outline"}
+                        size={40}
+                        color="white"
+                        onPress={this._handlePlayAndPause}
+                        style={{paddingLeft: 10}}
+                    />
+                    <MaterialIcons
+                        name={this.state.isFull ? "fullscreen" : "fullscreen-exit"}
+                        size={40}
+                        color="white"
+                        onPress={this._handleViewSize}
+                        style={{marginLeft: 'auto', marginRight: 25}}
+                    />
+                </View>
+            </View>
         );
     }
 }
