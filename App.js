@@ -2,7 +2,6 @@ import React from 'react';
 import {
     View,
     Dimensions,
-    Picker
 } from 'react-native';
 import {
     Video
@@ -28,10 +27,8 @@ export default class App extends React.Component {
             volume: 1.0,
             uri: "http://192.168.1.2/streaming/mystream.m3u8",
             //uri: "http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8",
+            //uri: 'http://techslides.com/demos/sample-videos/small.mp4',
             isFull: false,
-            // inputValue1: 'http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8',
-            // inputValue2: 'http://techslides.com/demos/sample-videos/small.mp4',
-            // inputValue3: 'http://192.168.1.2/streaming/mystream.m3u8',
             id: null,
             name: null,
             sex: null,
@@ -77,12 +74,18 @@ export default class App extends React.Component {
         return (
             <View style={{flex: 1}}>
                 <View
-                    style={{flex: 1.5, flexDirection: 'row', backgroundColor: 'gray', paddingTop: 25, paddingBottom: 5}}>
+                    style={{
+                        flex: 1.5,
+                        flexDirection: 'row',
+                        backgroundColor: 'gray',
+                        paddingTop: 25,
+                        paddingBottom: 5
+                    }}>
                     <Button
                         icon={{name: 'ios-contact-outline', type: 'ionicon'}}
                         title='患者情報取得'
                         borderRadius={15}
-                        onPress={()=>{
+                        onPress={() => {
                             if (this.state.id == null) {
                                 this.setState({
                                     id: 1234567890,
@@ -101,10 +104,10 @@ export default class App extends React.Component {
                         }}
                     />
 
-                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:180}}>ID:{this.state.id}</FormLabel>
-                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:180}}>氏名:{this.state.name}</FormLabel>
-                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:100}}>年齢:{this.state.age}</FormLabel>
-                    <FormLabel labelStyle={{ color:"white", fontSize: 22 ,width:100}}>性別:{this.state.sex}</FormLabel>
+                    <FormLabel labelStyle={{color: "white", fontSize: 22, width: 180}}>ID:{this.state.id}</FormLabel>
+                    <FormLabel labelStyle={{color: "white", fontSize: 22, width: 180}}>氏名:{this.state.name}</FormLabel>
+                    <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>年齢:{this.state.age}</FormLabel>
+                    <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>性別:{this.state.sex}</FormLabel>
 
                 </View>
                 <View style={{flex: 17, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
