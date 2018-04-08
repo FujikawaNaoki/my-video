@@ -2,6 +2,7 @@ import React from 'react';
 import {
     View,
     Dimensions,
+    Text
 } from 'react-native';
 import {
     Video
@@ -13,7 +14,8 @@ import {
 } from '@expo/vector-icons';
 import {
     FormLabel,
-    Button
+    Button,
+    ButtonGroup
 } from 'react-native-elements'
 
 export default class App extends React.Component {
@@ -33,10 +35,20 @@ export default class App extends React.Component {
             id: null,
             name: null,
             sex: null,
-            age: null
+            age: null,
+            cnt: "  ",
+            selected0Index: null,
+            selectedIndex: 0,
+            selected2Index: null,
+            selected3Index: 0
         };
 
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+
+        this.update0Index = this.update0Index.bind(this);
+        this.updateIndex = this.updateIndex.bind(this);
+        this.update2Index = this.update2Index.bind(this);
+        this.update3Index = this.update3Index.bind(this);
     }
 
     _handlePlayAndPause = () => {
@@ -57,61 +69,106 @@ export default class App extends React.Component {
         }));
     };
 
+    update0Index(selected0Index) {
+        if (this.state.selected0Index === null) {
+            this.setState({
+                selected0Index: 0,
+                id: 1234567890,
+                name: "東京　太郎",
+                sex: "男",
+                age: 40,
+                cnt: " 1"
+            })
+        } else {
+            this.setState({
+                selected0Index: null,
+                id: null,
+                name: null,
+                sex: null,
+                age: null,
+                cnt: "  "
+            })
+        }
+    }
+
+    updateIndex(selectedIndex) {
+        this.setState({selectedIndex})
+    }
+
+    update2Index(selected2Index) {
+        this.state.selected2Index === null ? this.setState({selected2Index: 0}) : this.setState({selected2Index: null})
+
+    }
+
+    update3Index(selected3Index) {
+        this.setState({selected3Index})
+    }
+
     render() {
         let {width, height} = Dimensions.get('window');
 
-        console.log("window.width", width);
-        console.log("window.height", height);
+        const buttons = ['記録', '取消', '終了'];
+        const buttons2 = ["1", "2", "3", "4"];
 
-        //width=1520,height=960
+        const {selected0Index, selectedIndex, selected2Index, selected3Index} = this.state;
 
         width = this.state.isFull ? width * 0.99 : width * 0.8;
-        //height = this.state.isFull ? height:height/2;
         height = height * (width / 1520);
-
-        console.log("width", width);
-        console.log("height", height);
 
         return (
             <View style={{flex: 1}}>
                 <View
                     style={{
-                        flex: 1.5,
+                        flex: 1,
                         flexDirection: 'row',
                         backgroundColor: 'gray',
                         paddingTop: 25,
                         paddingBottom: 5
                     }}>
-                    <Button
-                        icon={{name: 'ios-contact-outline', type: 'ionicon'}}
-                        title='患者情報取得'
-                        borderRadius={15}
-                        onPress={() => {
-                            if (this.state.id == null) {
-                                this.setState({
-                                    id: 1234567890,
-                                    name: "東京　太郎",
-                                    sex: "男",
-                                    age: 40
-                                })
-                            } else {
-                                this.setState({
-                                    id: null,
-                                    name: null,
-                                    sex: null,
-                                    age: null
-                                })
-                            }
-                        }}
+                    <ButtonGroup
+                        textStyle={{color: "white"}}
+                        onPress={this.update0Index}
+                        selectedIndex={selected0Index}
+                        buttons={["患者情報取得"]}
+                        containerStyle={{height: 35, width: 150, borderRadius: 10, backgroundColor: "gray"}}
                     />
-
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 180}}>ID:{this.state.id}</FormLabel>
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 180}}>氏名:{this.state.name}</FormLabel>
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>年齢:{this.state.age}</FormLabel>
                     <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>性別:{this.state.sex}</FormLabel>
+                    <FormLabel labelStyle={{color: "white", fontSize: 22, width: 100}}>{this.state.cnt}枚</FormLabel>
+                </View>
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        backgroundColor: 'gray',
+                        paddingTop: 10,
+                        paddingBottom: 10
+                    }}>
+                    <ButtonGroup
+                        textStyle={{color: "white"}}
+                        onPress={this.updateIndex}
+                        selectedIndex={selectedIndex}
+                        buttons={buttons}
+                        containerStyle={{height: 35, width: 250, borderRadius: 10, backgroundColor: "gray"}}
+                    />
+                    <ButtonGroup
+                        textStyle={{color: "white"}}
+                        onPress={this.update2Index}
+                        selectedIndex={selected2Index}
+                        buttons={["Voice"]}
+                        containerStyle={{height: 35, width: 80, borderRadius: 10, backgroundColor: "gray"}}
+                    />
+                    <ButtonGroup
+                        textStyle={{color: "white"}}
+                        onPress={this.update3Index}
+                        selectedIndex={selected3Index}
+                        buttons={buttons2}
+                        containerStyle={{height: 35, width: 250, borderRadius: 10, backgroundColor: "gray"}}
+                    />
 
                 </View>
-                {/*<View style={{flex: 17, backgroundColor: '#F3F3F3', alignItems: 'center', justifyContent: 'center'}}>*/}
                 <View style={{flex: 17, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center'}}>
                     <Video
                         source={{uri: this.state.uri}}
